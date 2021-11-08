@@ -1,3 +1,7 @@
 
 server:
   port : 8080
+  
+serviceurl:
+  customer: https://tesodev-be-customerservice.herokuapp.com
+  order: https://tesodev-be-orderservice.herokuapp.com

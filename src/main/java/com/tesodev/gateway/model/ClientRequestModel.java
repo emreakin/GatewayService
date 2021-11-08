@@ -11,6 +11,5 @@ public class ClientRequestModel {
 
 	private String url;
 	private String requestBody;
-	private String jwtToken;
 	private HttpMethod httpMethod;
 }
