@@ -5,3 +5,9 @@ server:
 serviceurl:
   customer: https://tesodev-be-customerservice.herokuapp.com
   order: https://tesodev-be-orderservice.herokuapp.com
+  
+jwt: 
+  secret : tesodev.gateway
+  username : tesodev
+  password : $2a$12$Xtf43/1V5/yg3dUUxl20I.OCrGM9hQ5rMU8Tz2nigGW0KCOuLRawa 
+
