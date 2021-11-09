@@ -9,5 +9,5 @@ serviceurl:
 jwt: 
   secret : tesodev.gateway
   username : tesodev
-  password : $2a$12$Xtf43/1V5/yg3dUUxl20I.OCrGM9hQ5rMU8Tz2nigGW0KCOuLRawa 
+  password : $2a$12$Xtf43/1V5/yg3dUUxl20I.oyfanLwId8fKqn0LV0vTo/h4C8FQI7O 
 
