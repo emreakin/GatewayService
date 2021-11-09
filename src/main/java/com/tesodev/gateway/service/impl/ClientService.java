@@ -1,6 +1,11 @@
 package com.tesodev.gateway.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,7 +25,17 @@ public class ClientService implements IClientService {
 	
 	@Override
 	public String getRestResponse(ClientRequestModel clientRequest){
-		return restTemplate.getForObject(clientRequest.getUrl(), String.class);
+		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    
+	    HttpEntity<String> request = new HttpEntity<>(clientRequest.getRequestBody(), headers);
+	    
+	    ResponseEntity<String> response = this.restTemplate.exchange(clientRequest.getUrl(), clientRequest.getHttpMethod(), request, String.class);
+	    if(response.getStatusCode() == HttpStatus.OK) {
+	        return response.getBody();
+	    } else {
+	        return null;
+	    }
 	}
-
 }

@@ -23,4 +23,5 @@ public class OrderModel implements Serializable {
     private String status;
     private AddressModel address;
     private ProductModel product;
+    private CustomerModel customer;
 }
