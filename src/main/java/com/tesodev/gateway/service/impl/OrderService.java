@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tesodev.gateway.exception.ErrorCodes;
+import com.tesodev.gateway.exception.ServiceException;
 import com.tesodev.gateway.model.BaseResponseModel;
 import com.tesodev.gateway.model.ClientRequestModel;
 import com.tesodev.gateway.model.CustomerModel;
@@ -47,7 +49,7 @@ public class OrderService implements IOrderService {
 	}
 	
 	@Override
-	public String createOrder(OrderModel order) {
+	public String createOrder(OrderModel order) throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + CREATE_ORDER)
 				.setRequestBody(gson.toJson(order))
@@ -62,11 +64,15 @@ public class OrderService implements IOrderService {
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<IdResultModel>) fromJson;
 		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.CREATION_FAIL, "Order create fail : " + baseResponse.getError());
+		}
+		
 		return baseResponse.getResult().getId().toString();
 	}
 
 	@Override
-	public boolean updateOrder(OrderModel order) {
+	public boolean updateOrder(OrderModel order) throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + UPDATE_ORDER)
 				.setRequestBody(gson.toJson(order))
@@ -81,11 +87,15 @@ public class OrderService implements IOrderService {
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<StatusResultModel>) fromJson;
 		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.UPDATE_FAIL, "Order update fail : " + baseResponse.getError());
+		}
+		
 		return baseResponse.getResult().isStatus();
 	}
 
 	@Override
-	public boolean deleteOrder(String orderId) {
+	public boolean deleteOrder(String orderId) throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + DELETE_ORDER + "/" + UUID.fromString(orderId))
 				.setHttpMethod(HttpMethod.DELETE)
@@ -99,11 +109,15 @@ public class OrderService implements IOrderService {
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<StatusResultModel>) fromJson;
 		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.DELETE_FAIL, "Order delete fail : " + baseResponse.getError());
+		}
+		
 		return baseResponse.getResult().isStatus();
 	}
 	
 	@Override
-	public List<OrderModel> listAllOrders() {
+	public List<OrderModel> listAllOrders() throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + LIST_ALL_ORDER)
 				.setHttpMethod(HttpMethod.GET)
@@ -116,6 +130,10 @@ public class OrderService implements IOrderService {
 		
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<OrdersResultModel>) fromJson;
+		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.DATA_RETREIVE_FAIL, "Order list fail : " + baseResponse.getError());
+		}
 		
 		List<OrderModel> orders = baseResponse.getResult().getOrders();
 		List<String> customerIds = orders.stream().map(order -> order.getCustomerId().toString()).collect(Collectors.toList());
@@ -133,7 +151,7 @@ public class OrderService implements IOrderService {
 	}
 
 	@Override
-	public OrderModel getOrder(String orderId) {
+	public OrderModel getOrder(String orderId) throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + GET_ORDER + "/" + UUID.fromString(orderId))
 				.setHttpMethod(HttpMethod.GET)
@@ -146,6 +164,10 @@ public class OrderService implements IOrderService {
 		
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<OrderModel>) fromJson;
+		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.DATA_RETREIVE_FAIL, "Order get fail : " + baseResponse.getError());
+		}
 		
 		return baseResponse.getResult();
 	}

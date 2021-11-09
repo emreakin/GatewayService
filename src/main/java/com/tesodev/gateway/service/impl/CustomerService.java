@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tesodev.gateway.exception.ErrorCodes;
+import com.tesodev.gateway.exception.ServiceException;
 import com.tesodev.gateway.model.BaseResponseModel;
 import com.tesodev.gateway.model.ClientRequestModel;
 import com.tesodev.gateway.model.CustomerIdListRequestModel;
@@ -41,7 +43,7 @@ public class CustomerService implements ICustomerService{
 	}
 	
 	@Override
-	public String createCustomer(CustomerModel customer) {
+	public String createCustomer(CustomerModel customer) throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + CREATE_CUSTOMER)
 				.setRequestBody(gson.toJson(customer))
@@ -56,11 +58,15 @@ public class CustomerService implements ICustomerService{
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<IdResultModel>) fromJson;
 		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.CREATION_FAIL, "Customer create fail : " + baseResponse.getError());
+		}
+		
 		return baseResponse.getResult().getId().toString();
 	}
 
 	@Override
-	public boolean updateCustomer(CustomerModel customer) {
+	public boolean updateCustomer(CustomerModel customer) throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + UPDATE_CUSTOMER)
 				.setRequestBody(gson.toJson(customer))
@@ -75,11 +81,15 @@ public class CustomerService implements ICustomerService{
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<StatusResultModel>) fromJson;
 		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.UPDATE_FAIL, "Customer update fail : " + baseResponse.getError());
+		}
+		
 		return baseResponse.getResult().isStatus();
 	}
 
 	@Override
-	public boolean deleteCustomer(String customerId) {
+	public boolean deleteCustomer(String customerId) throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + DELETE_CUSTOMER + "/" + UUID.fromString(customerId))
 				.setHttpMethod(HttpMethod.DELETE)
@@ -93,11 +103,15 @@ public class CustomerService implements ICustomerService{
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<StatusResultModel>) fromJson;
 		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.DELETE_FAIL, "Customer delete fail : " + baseResponse.getError());
+		}
+		
 		return baseResponse.getResult().isStatus();
 	}
 	
 	@Override
-	public List<CustomerModel> listAllCustomers() {
+	public List<CustomerModel> listAllCustomers() throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + LIST_ALL_CUSTOMER)
 				.setHttpMethod(HttpMethod.GET)
@@ -111,11 +125,15 @@ public class CustomerService implements ICustomerService{
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<CustomersResultModel>) fromJson;
 		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.DATA_RETREIVE_FAIL, "Customer get all fail : " + baseResponse.getError());
+		}
+		
 		return baseResponse.getResult().getCustomers();
 	}
 	
 	@Override
-	public List<CustomerModel> listCustomersByCustomerIds(List<String> customerIds) {
+	public List<CustomerModel> listCustomersByCustomerIds(List<String> customerIds) throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + LIST_BY_CUSTOMERIDS)
 				.setRequestBody(gson.toJson(new CustomerIdListRequestModel(customerIds)))
@@ -130,11 +148,15 @@ public class CustomerService implements ICustomerService{
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<CustomersResultModel>) fromJson;
 		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.DATA_RETREIVE_FAIL, "Customer list by ids fail : " + baseResponse.getError());
+		}
+		
 		return baseResponse.getResult().getCustomers();
 	}
 
 	@Override
-	public CustomerModel getCustomer(String customerId) {
+	public CustomerModel getCustomer(String customerId) throws ServiceException {
 		ClientRequestModel request = ClientRequestModel.builder()
 				.setUrl(serviceUrl + API_BASE + GET_CUSTOMER + "/" + UUID.fromString(customerId))
 				.setHttpMethod(HttpMethod.GET)
@@ -147,6 +169,10 @@ public class CustomerService implements ICustomerService{
 		
 		@SuppressWarnings("unchecked")
 		var baseResponse = (BaseResponseModel<CustomerModel>) fromJson;
+		
+		if(baseResponse.getError() != null) {
+			throw new ServiceException(ErrorCodes.DATA_RETREIVE_FAIL, "Customer get fail : " + baseResponse.getError());
+		}
 		
 		return baseResponse.getResult();
 	}

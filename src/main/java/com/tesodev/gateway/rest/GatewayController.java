@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tesodev.gateway.exception.ServiceException;
 import com.tesodev.gateway.model.CustomerModel;
 import com.tesodev.gateway.model.CustomersResultModel;
 import com.tesodev.gateway.model.MessageResponseModel;
@@ -35,8 +36,15 @@ public class GatewayController {
 		RestResponse<MessageResponseModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		String customerId = customerService.createCustomer(customer);
-		long endTime = System.currentTimeMillis();
+		long endTime;
+		String customerId;
+		try {
+			customerId = customerService.createCustomer(customer);
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(new MessageResponseModel(true, "New Customer created with " + customerId));
 		response.setResponseTime(endTime - startTime);
@@ -49,8 +57,15 @@ public class GatewayController {
 		RestResponse<MessageResponseModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		boolean result = customerService.updateCustomer(customer);
-		long endTime = System.currentTimeMillis();
+		boolean result;
+		long endTime;
+		try {
+			result = customerService.updateCustomer(customer);
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(new MessageResponseModel(result, "Customer update status " + result));
 		response.setResponseTime(endTime - startTime);
@@ -63,8 +78,15 @@ public class GatewayController {
 		RestResponse<MessageResponseModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		boolean result = customerService.deleteCustomer(customerId);
-		long endTime = System.currentTimeMillis();
+		boolean result;
+		long endTime;
+		try {
+			result = customerService.deleteCustomer(customerId);
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(new MessageResponseModel(result, "Customer delete status " + result));
 		response.setResponseTime(endTime - startTime);
@@ -77,8 +99,15 @@ public class GatewayController {
 		RestResponse<CustomersResultModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		List<CustomerModel> customers = customerService.listAllCustomers();
-		long endTime = System.currentTimeMillis();
+		List<CustomerModel> customers;
+		long endTime;
+		try {
+			customers = customerService.listAllCustomers();
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(new CustomersResultModel(customers));
 		response.setResponseTime(endTime - startTime);
@@ -91,8 +120,15 @@ public class GatewayController {
 		RestResponse<CustomerModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		CustomerModel customer = customerService.getCustomer(customerId);
-		long endTime = System.currentTimeMillis();
+		CustomerModel customer;
+		long endTime;
+		try {
+			customer = customerService.getCustomer(customerId);
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(customer);
 		response.setResponseTime(endTime - startTime);
@@ -105,8 +141,15 @@ public class GatewayController {
 		RestResponse<MessageResponseModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		String orderId = orderService.createOrder(order);
-		long endTime = System.currentTimeMillis();
+		String orderId;
+		long endTime;
+		try {
+			orderId = orderService.createOrder(order);
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(new MessageResponseModel(true, "New Order created with " + orderId));
 		response.setResponseTime(endTime - startTime);
@@ -119,8 +162,15 @@ public class GatewayController {
 		RestResponse<MessageResponseModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		boolean result = orderService.updateOrder(order);
-		long endTime = System.currentTimeMillis();
+		boolean result;
+		long endTime;
+		try {
+			result = orderService.updateOrder(order);
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(new MessageResponseModel(result, "Order update status " + result));
 		response.setResponseTime(endTime - startTime);
@@ -133,8 +183,15 @@ public class GatewayController {
 		RestResponse<MessageResponseModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		boolean result = orderService.deleteOrder(orderId);
-		long endTime = System.currentTimeMillis();
+		boolean result;
+		long endTime;
+		try {
+			result = orderService.deleteOrder(orderId);
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(new MessageResponseModel(result, "Order delete status " + result));
 		response.setResponseTime(endTime - startTime);
@@ -147,8 +204,15 @@ public class GatewayController {
 		RestResponse<OrdersResultModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		List<OrderModel> orders = orderService.listAllOrders();
-		long endTime = System.currentTimeMillis();
+		List<OrderModel> orders;
+		long endTime;
+		try {
+			orders = orderService.listAllOrders();
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(new OrdersResultModel(orders));
 		response.setResponseTime(endTime - startTime);
@@ -161,8 +225,15 @@ public class GatewayController {
 		RestResponse<OrderModel> response = new RestResponse<>();
 		
 		long startTime = System.currentTimeMillis();
-		OrderModel order = orderService.getOrder(orderId);
-		long endTime = System.currentTimeMillis();
+		OrderModel order;
+		long endTime;
+		try {
+			order = orderService.getOrder(orderId);
+			endTime = System.currentTimeMillis();
+		} catch (ServiceException e) {
+			response.setError(e.getErrorMessage());
+			return response;
+		}
 		
 		response.setResult(order);
 		response.setResponseTime(endTime - startTime);
