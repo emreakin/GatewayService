@@ -168,6 +168,10 @@ public class OrderService implements IOrderService {
 			throw new ServiceException(ErrorCodes.DATA_RETREIVE_FAIL, "Order get fail : " + baseResponse.getError());
 		}
 		
-		return baseResponse.getResult();
+		OrderModel order = baseResponse.getResult();
+		CustomerModel customer = customerService.getCustomer(order.getCustomerId().toString());
+		order.setCustomer(customer);
+		
+		return order;
 	}
 }
