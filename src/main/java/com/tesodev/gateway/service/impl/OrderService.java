@@ -144,7 +144,6 @@ public class OrderService implements IOrderService {
 		
 		for(OrderModel order : orders) {
 			order.setCustomer(customerMap.get(order.getCustomerId()));
-			order.setCustomerId(null);
 		}
 		
 		return orders;
