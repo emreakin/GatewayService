@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "3e07b3c2-ab74-4d3c-8b06-e38f23d64335",
+		"name": "Gateway Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/authenticate",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/listCustomers",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"listCustomers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"asfas\",\r\n    \"email\": \"aaadsfsdga@gmail.com\",\r\n    \"address\": {\r\n        \"addressLine\": \"Test Address 2\",\r\n        \"city\": \"Konya\",\r\n        \"country\": \"Türkiye\",\r\n        \"cityCode\": 32\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/createCustomer",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"createCustomer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Customer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"49b77192-54d2-4ca4-a8a2-61b72085539e\",\r\n    \"name\": \"uhuuu\",\r\n    \"email\": \"aaadsfsdga@gmail.com\",\r\n    \"address\": {\r\n        \"id\": \"f66d388d-9581-4c1e-9ab5-8f4bf02cc88e\",\r\n        \"addressLine\": \"Test Address 2\",\r\n        \"city\": \"Konya\",\r\n        \"country\": \"Türkiye\",\r\n        \"cityCode\": 32\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/updateCustomer",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"updateCustomer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Customer",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/deleteCustomer/8ca495fb-4bfd-4270-9fbf-b471a6dc99c9",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"deleteCustomer",
+						"8ca495fb-4bfd-4270-9fbf-b471a6dc99c9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/getCustomer/c9580aa1-b440-47c2-92e0-ba42c20d142b",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"getCustomer",
+						"c9580aa1-b440-47c2-92e0-ba42c20d142b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Orders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/listOrders",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"listOrders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"quantity\": 7,\r\n    \"price\": 226.5,\r\n    \"status\": \"WAIT\",\r\n    \"customerId\": \"49b77192-54d2-4ca4-a8a2-61b72085539e\",\r\n    \"address\": {\r\n        \"id\": \"19b7cfbd-f015-4527-8775-684fbd43d8df\",\r\n        \"addressLine\": \"Test Address\",\r\n        \"city\": \"Trabzon\",\r\n        \"country\": \"Türkiye\",\r\n        \"cityCode\": 61\r\n    },\r\n    \"product\": {\r\n        \"id\": \"8088c2d6-78db-4794-a7f4-2ccc677cd278\",\r\n        \"imageUrl\": \"http://product.images.com/ghsagd8deevdv\",\r\n        \"name\": \"Second Image\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/createOrder",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"createOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"39687005-d728-4bee-bd5c-b1779252b7d7\",\r\n    \"customerId\": \"49b77192-54d2-4ca4-a8a2-61b72085539e\",\r\n    \"quantity\": 7,\r\n    \"price\": 226.5,\r\n    \"status\": \"OK\",\r\n    \"address\": {\r\n        \"id\": \"b870766f-c7a9-4f14-ac4b-4ff30e75e6c3\",\r\n        \"addressLine\": \"Test Address\",\r\n        \"city\": \"Trabzon\",\r\n        \"country\": \"Türkiye\",\r\n        \"cityCode\": 61\r\n    },\r\n    \"product\": {\r\n        \"id\": \"4193e6f9-3f37-43ce-814d-ae3f07260752\",\r\n        \"imageUrl\": \"http://product.images.com/ghsagd8deevdv\",\r\n        \"name\": \"Second Image\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/updateOrder",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"updateOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/deleteOrder/cb62e675-073a-4a51-b25d-b9aa2c1e55b5",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"deleteOrder",
+						"cb62e675-073a-4a51-b25d-b9aa2c1e55b5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/getOrder/39687005-d728-4bee-bd5c-b1779252b7d7",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"getOrder",
+						"39687005-d728-4bee-bd5c-b1779252b7d7"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXNvZGV2IiwiZXhwIjoxNjM2NTQ5ODcxLCJpYXQiOjE2MzY1MzE4NzF9.oERSH0pxJZsUIYldOxX1YRDNHcoNX8jjjAkaTRpeHWKNWzTCCeuxpau52mfv9zjtbrGT-3_bvS3AYglKpszeZw",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "https://tesodev-be-gatewayservice.herokuapp.com"
+		},
+		{
+			"key": "username",
+			"value": "tesodev"
+		},
+		{
+			"key": "password",
+			"value": "123456"
+		}
+	]
+}
