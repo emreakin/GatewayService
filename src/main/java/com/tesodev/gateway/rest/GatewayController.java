@@ -73,7 +73,7 @@ public class GatewayController {
         return response;
     }
 	
-	@DeleteMapping("/deleteCustomer")
+	@DeleteMapping("/deleteCustomer/{id}")
     public RestResponse<MessageResponseModel> deleteCustomer(@PathVariable(value = "id", required = true) String customerId) {
 		RestResponse<MessageResponseModel> response = new RestResponse<>();
 		
@@ -178,7 +178,7 @@ public class GatewayController {
         return response;
     }
 	
-	@DeleteMapping("/deleteOrder")
+	@DeleteMapping("/deleteOrder/{id}")
     public RestResponse<MessageResponseModel> deleteOrder(@PathVariable(value = "id", required = true) String orderId) {
 		RestResponse<MessageResponseModel> response = new RestResponse<>();
 		
